@@ -26,3 +26,5 @@ We are using the Red Hat supported connectors. Since we need the Oracle JDBC dri
 ### 4. Connector
 #### 4.1 MySQL
 #### 4.2 Oracle
+__amq-oracle-kafka-connector.yaml__
+
