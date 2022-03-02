@@ -1,0 +1,27 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  labels:
+    strimzi.io/cluster: west-cluster-connect-cluster-2
+  name: my-source-connector
+  namespace: amq-streams
+spec:
+  class: io.debezium.connector.mysql.MySqlConnector
+  config:
+    database.server.name: spring-music-db
+    database.history.kafka.recovery.poll.interval.ms: 60000
+    database.hostname: spring-music-db.debezium-demo.svc.cluster.local
+    transforms: unwrap
+    name: my-source-connector
+    database.password: music
+    database.server.id: 223344
+    database.allowPublicKeyRetrieval: true
+    database.port: 3306
+    database.include.list: music
+    database.history.kafka.topic: dbhistory.music
+    database.history.kafka.bootstrap.servers: 'west-cluster-kafka-plain-bootstrap.amq-streams.svc.cluster.local:9092'
+    after.state.only: 'true'
+    database.dbname: music
+    database.user: root
+    transforms.unwrap.type: io.debezium.transforms.ExtractNewRecordState
+  tasksMax: 1
