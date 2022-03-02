@@ -1,0 +1,48 @@
+aapiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnect
+metadata:
+  annotations:
+    strimzi.io/use-connector-resources: 'true'
+  name: west-cluster-connect-cluster-2
+  namespace: amq-streams
+  resourceVersion: '87186810'
+  uid: 19baf6fb-0199-4ebe-abbf-503989bf0966
+spec:
+  bootstrapServers: 'west-cluster-kafka-bootstrap:9093'
+  build:
+    output:
+      image: 'debezium-streams-connect:latest'
+      type: imagestream
+    plugins:
+      - artifacts:
+          - type: zip
+            url: >-
+              https://maven.repository.redhat.com/ga/io/debezium/debezium-connector-mysql/1.7.2.Final-redhat-00003/debezium-connector-mysql-1.7.2.Final-redhat-00003-plugin.zip
+          - type: zip
+            url: >-
+              https://maven.repository.redhat.com/ga/io/apicurio/apicurio-registry-distro-connect-converter/2.0.3.Final-redhat-00002/apicurio-registry-distro-connect-converter-2.0.3.Final-redhat-00002.zip
+          - type: zip
+            url: >-
+              https://maven.repository.redhat.com/ga/io/debezium/debezium-connector-oracle/1.7.2.Final-redhat-00003/debezium-connector-oracle-1.7.2.Final-redhat-00003-plugin.zip
+          - type: zip
+            url: >-
+              https://maven.repository.redhat.com/ga/io/debezium/debezium-scripting/1.7.2.Final-redhat-00003/debezium-scripting-1.7.2.Final-redhat-00003.zip
+          - type: jar
+            url: >-
+              https://repo1.maven.org/maven2/com/oracle/database/jdbc/ojdbc10/19.9.0.0/ojdbc10-19.9.0.0.jar
+        name: debezium-connector-mysql
+  config:
+    config.storage.replication.factor: -1
+    config.storage.topic: connect-cluster-configs
+    group.id: connect-cluster2
+    offset.storage.replication.factor: -1
+    offset.storage.topic: connect-cluster-offsets
+    status.storage.replication.factor: -1
+    status.storage.topic: connect-cluster-status
+    topic.creation.default.cleanup.policy: compact
+  replicas: 1
+  tls:
+    trustedCertificates:
+      - certificate: ca.crt
+        secretName: west-cluster-cluster-ca-cert
+  version: 3.0.0

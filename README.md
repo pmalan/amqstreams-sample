@@ -13,10 +13,17 @@ Prerequisites:
 
 __amq-streams-subscription.yaml__
 
-To install the operator in a specific namespace. It is not required to install AMQ Streams operator into a specific namspace, but it gives you the flexibility to use multiple versions, if required, within the cluster, when operator is targeted at specific namespace.
+Register the AMQ Streams operator in a specific namespace, in this case amq-streams. 
+
+_It is not required to install AMQ Streams operator into a specific namspace, but it gives you the flexibility to use multiple versions, if required, within the cluster, when operator is targeted at specific namespace._
 
 ### 2. AMQ Streams CRD
-### 3. Connect
+### 3. Kafka Connect
+_
+Note the __strimzi.io/use-connector-resources: 'true'__ _ to indicate an image should be build, with the specified resources in __build:__ and __plugins__ 
+_
+
+We are using the Red Hat supported connectors.
 ### 4. Connector
 #### 4.1 MySQL
 #### 4.2 Oracle
