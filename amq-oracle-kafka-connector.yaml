@@ -1,0 +1,18 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  labels:
+    strimzi.io/cluster: west-cluster-connect-cluster-2
+  name: my-oracle-connector
+spec:
+  class: io.debezium.connector.oracle.OracleConnector
+  config:
+    database.server.name: oracledb
+    database.hostname: 192.168.89.96
+    database.password: debezium
+    schema.include.list: music
+    database.port: 1521
+    database.history.kafka.topic: dbhistory.ora.music
+    database.history.kafka.bootstrap.servers: 'west-cluster-kafka-plain-bootstrap.amq-streams.svc.cluster.local:9092'
+    database.dbname: ORCL
+    database.user: debezium
