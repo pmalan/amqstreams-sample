@@ -19,18 +19,20 @@ _It is not required to install AMQ Streams operator into a specific namspace, bu
 
 ### 2. AMQ Streams CRD
 ### 3. Kafka Connect
-*Note the annotation *__strimzi.io/use-connector-resources: 'true'__ * indicates that we are going to use connector custom resources to define the connection details. The other way is to post a configuration JSON to connector. 
+*Note the annotation* __strimzi.io/use-connector-resources: 'true'__ *indicates that we are going to use connector custom resources to define the connection(s) details. The other way is to post a configuration JSON to connector.*
 
-We are using the Red Hat supported connectors. Since we need the Oracle JDBC drivers, that is included from external Maven repository.
+We are using the Red Hat supported connectors. Since we need proprietary Oracle JDBC drivers, that is included from external Maven repository. (And as such not supported by Red Hat)
 ### 4. Kafka Connector
-__amq-oracle-kafka-connector.yaml__ and __amq-mysql-coonector.yaml__
+__amq-oracle-kafka-connector.yaml__ and __amq-mysql-connector.yaml__
 
 The label _strimzi.io/cluster: west-cluster-connect-cluster-2_ connects it to the Kafka connect instance as specified in the connect name - _name: west-cluster-connect-cluster-2_.
 
-_class: _ specifies the connector implementation class, in case you want to use own implementation.
-_tasksMax: 1_ specifies the threads you want to allocate.
+_class:_ specifies the connector implementation class, in case you want to use own implementation, else consult the Debezium / Kafka Connector documentation for the class name.
+
+_tasksMax: 1_ specifies the threads you want to allocate, within the connect instance.
 
 #### 4.1 MySQL
+__amq-mysql-connector.yaml__
 #### 4.2 Oracle
 __amq-oracle-kafka-connector.yaml__
 
